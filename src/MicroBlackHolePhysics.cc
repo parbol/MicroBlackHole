@@ -23,7 +23,7 @@ MicroBlackHolePhysics::MicroBlackHolePhysics(const G4String& nam)
   : G4VPhysicsConstructor(nam),
     fBH(0)
 {
-  fElCharge  = 0.0;
+  fElCharge  = 1.0;
   fMass = 100.*GeV;
   SetPhysicsType(bUnknown);
 }

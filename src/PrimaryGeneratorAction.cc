@@ -189,8 +189,9 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     for ( unsigned j=0; j<vect->size(); j++) {
         particleName=CRYUtils::partName((*vect)[j]->id());
         //particleGun->SetParticleDefinition(particleTable->FindParticle((*vect)[j]->PDGid()));
-        particleGun->SetParticleDefinition(particleTable->FindParticle("bh"));
-        particleGun->SetParticleEnergy(2.435030873e18*CLHEP::GeV);
+        particleGun->SetParticleDefinition(particleTable->FindParticle("microblackhole"));
+        //particleGun->SetParticleEnergy(2.435030873e18*CLHEP::GeV);
+        particleGun->SetParticleEnergy(2.435030873*CLHEP::GeV);
         particleGun->SetParticlePosition(G4ThreeVector((*vect)[j]->x()*CLHEP::m, (*vect)[j]->y()*CLHEP::m, ((*vect)[j]->z()+(myGeom->getZOffsetCRY()/CLHEP::cm)/100.0)*CLHEP::m));
         particleGun->SetParticleMomentumDirection(G4ThreeVector((*vect)[j]->u(), (*vect)[j]->v(), (*vect)[j]->w()));
         particleGun->SetParticleTime((*vect)[j]->t());
