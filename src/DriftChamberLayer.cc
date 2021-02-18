@@ -1,22 +1,3 @@
-//----------------------------------------------------------------------//
-// ___  ___                    _____           _                        //
-// |  \/  |                   /  ___|         | |                       //
-// | .  . |_   _  ___  _ __   \ `--. _   _ ___| |_ ___ _ __ ___  ___    //
-// | |\/| | | | |/ _ \| '_ \   `--. \ | | / __| __/ _ \ '_ ` _ \/ __|   //
-// | |  | | |_| | (_) | | | | /\__/ / |_| \__ \ ||  __/ | | | | \__ \   //
-// \_|  |_/\__,_|\___/|_| |_| \____/ \__, |___/\__\___|_| |_| |_|___/   //
-//                                    __/ |                             //
-//----------------------------------------------------------------------//
-// A project by: C. Diez, P. Gomez and P. Martinez                      //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-// DriftChamberLayer.hh                                                 //
-//----------------------------------------------------------------------//
-// Methods associated to the DriftChamberLayer class.                   //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-
-
 #include "DriftChamberLayer.hh"
 #include "DriftChamberLayerHit.hh"
 #include "G4HCofThisEvent.hh"
@@ -84,8 +65,6 @@ G4bool DriftChamberLayer::ProcessHits(G4Step*aStep,G4TouchableHistory*  /*ROhist
     G4String postMaterial = aStep->GetPostStepPoint()->GetMaterial()->GetName();
     if(preMaterial != "G4_Ar" || postMaterial != "G4_Cu") return true;
   
-    
-    
 
     G4StepPoint* preStepPoint = aStep->GetPreStepPoint();    
     G4TouchableHistory* theTouchable = (G4TouchableHistory*)(preStepPoint->GetTouchable());
@@ -186,7 +165,6 @@ G4bool DriftChamberLayer::ProcessHits(G4Step*aStep,G4TouchableHistory*  /*ROhist
     
 
     hitsCollection->insert(aHit);
-
     return true;
 }
 

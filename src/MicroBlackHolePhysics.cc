@@ -18,13 +18,27 @@
 #include "G4BuilderType.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "G4EmStandardPhysics.hh"
+#include "G4EmExtraPhysics.hh"
+#include "G4DecayPhysics.hh"
+#include "G4HadronElasticPhysics.hh"
+#include "G4HadronPhysicsFTFP_BERT.hh"
+#include "G4StoppingPhysics.hh"
+#include "G4IonPhysics.hh"
+#include "G4NeutronTrackingCut.hh"
+#include "G4ionIonisation.hh"
+#include "G4hIonisation.hh"
+#include "G4HadronicAbsorptionBertini.hh"
+#include "G4HadronicAbsorptionFritiof.hh"
+#include "G4MuonMinusCapture.hh"
+
 
 MicroBlackHolePhysics::MicroBlackHolePhysics(const G4String& nam)
   : G4VPhysicsConstructor(nam),
     fBH(0)
 {
   fElCharge  = 1.0;
-  fMass = 100.*GeV;
+  fMass = 1.220910e19*GeV;
   SetPhysicsType(bUnknown);
 }
 
@@ -47,21 +61,15 @@ void MicroBlackHolePhysics::ConstructProcess()
   
   G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
   G4ProcessManager* pmanager = fBH->GetProcessManager();
-  
-  G4double emin = fMass/20000.;
-  if(emin < keV) { emin = keV; }
-  G4double emax = std::max(10.*TeV, fMass*100);
-  G4int nbin = G4lrint(10*std::log10(emax/emin));
+ 
 
-  if(fBH->GetPDGCharge() != 0.0) {
-    G4hIonisation* hhioni = new G4hIonisation();
-    hhioni->SetDEDXBinning(nbin);
-    hhioni->SetMinKinEnergy(emin);
-    hhioni->SetMaxKinEnergy(emax);
-    ph->RegisterProcess(hhioni, fBH);
-  }
-  
-  ph->RegisterProcess(new G4StepLimiter(), fBH);
+  ph->RegisterProcess(new G4ionIonisation(), fBH);
+  ph->RegisterProcess(new G4hIonisation(), fBH);
+  ph->RegisterProcess(new G4HadronicAbsorptionBertini(), fBH);
+  ph->RegisterProcess(new G4HadronicAbsorptionFritiof(), fBH);
+
+  //ph->RegisterProcess(new G4StepLimiter(), fBH);
+
 }
 
 void MicroBlackHolePhysics::SetElectricCharge(G4double val)

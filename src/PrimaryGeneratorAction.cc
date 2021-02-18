@@ -1,21 +1,3 @@
-//----------------------------------------------------------------------//
-// ___  ___                    _____           _                        //
-// |  \/  |                   /  ___|         | |                       //
-// | .  . |_   _  ___  _ __   \ `--. _   _ ___| |_ ___ _ __ ___  ___    //
-// | |\/| | | | |/ _ \| '_ \   `--. \ | | / __| __/ _ \ '_ ` _ \/ __|   //
-// | |  | | |_| | (_) | | | | /\__/ / |_| \__ \ ||  __/ | | | | \__ \   //
-// \_|  |_/\__,_|\___/|_| |_| \____/ \__, |___/\__\___|_| |_| |_|___/   //
-//                                    __/ |                             //
-//----------------------------------------------------------------------//
-// A project by: C. Diez, P. Gomez and P. Martinez                      //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-// PrimaryGenerationAction.cc                                           //
-//----------------------------------------------------------------------//
-// This class handles the generation of events by calling CRY.          //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-
 #include <iomanip>
 #include "PrimaryGeneratorAction.hh"
 #include <sstream>
@@ -185,13 +167,16 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     vect->clear();
     gen->genEvent(vect);
 
-
     for ( unsigned j=0; j<vect->size(); j++) {
         particleName=CRYUtils::partName((*vect)[j]->id());
         //particleGun->SetParticleDefinition(particleTable->FindParticle((*vect)[j]->PDGid()));
-        particleGun->SetParticleDefinition(particleTable->FindParticle("microblackhole"));
+        //particleGun->SetParticleDefinition(particleTable->FindParticle("microblackhole"));
         //particleGun->SetParticleEnergy(2.435030873e18*CLHEP::GeV);
-        particleGun->SetParticleEnergy(2.435030873*CLHEP::GeV);
+        double mass = 1.220910e19;
+        double beta = 300.0/300000.0;
+        double gamma = 1.0/sqrt(1.0 - beta * beta);
+        double energy = gamma * mass;
+        particleGun->SetParticleEnergy(energy*CLHEP::GeV);
         particleGun->SetParticlePosition(G4ThreeVector((*vect)[j]->x()*CLHEP::m, (*vect)[j]->y()*CLHEP::m, ((*vect)[j]->z()+(myGeom->getZOffsetCRY()/CLHEP::cm)/100.0)*CLHEP::m));
         particleGun->SetParticleMomentumDirection(G4ThreeVector((*vect)[j]->u(), (*vect)[j]->v(), (*vect)[j]->w()));
         particleGun->SetParticleTime((*vect)[j]->t());

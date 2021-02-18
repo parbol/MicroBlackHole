@@ -40,9 +40,9 @@ MicroBlackHole* MicroBlackHole::MicroBlackHoleDefinition(G4double mass, G4double
   if(!theMicroBlackHole) {
     theMicroBlackHole = new MicroBlackHole(
        "microblackhole",         mass,       0.0*MeV,       eplus*eCharge, 
-                0,               0,             0,          
+                2,               1,             1,          
                 0,               0,             0,             
-          "boson",               0,             0,           0,
+          "boson",               1,             0,           0,
              true,            -1.0,             0);
     
     

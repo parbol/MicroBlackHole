@@ -159,6 +159,8 @@ int main(int argc,char** argv) {
         delete ui_e;
     }
 
+    //G4UImanager* UI = G4UImanager::GetUIpointer();
+    //UI->ApplyCommand("/tracking/storeTrajectory 2");
     
     runManager->BeamOn(numberOfEvents);
 

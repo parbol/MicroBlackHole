@@ -1,21 +1,3 @@
-//----------------------------------------------------------------------//
-// ___  ___                    _____           _                        //
-// |  \/  |                   /  ___|         | |                       //
-// | .  . |_   _  ___  _ __   \ `--. _   _ ___| |_ ___ _ __ ___  ___    //
-// | |\/| | | | |/ _ \| '_ \   `--. \ | | / __| __/ _ \ '_ ` _ \/ __|   //
-// | |  | | |_| | (_) | | | | /\__/ / |_| \__ \ ||  __/ | | | | \__ \   //
-// \_|  |_/\__,_|\___/|_| |_| \____/ \__, |___/\__\___|_| |_| |_|___/   //
-//                                    __/ |                             //
-//----------------------------------------------------------------------//
-// A project by: C. Diez, P. Gomez and P. Martinez                      //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-// EventAction.cc                                                       //
-//----------------------------------------------------------------------//
-// Fill the hits in the corresponding trees                             //
-//----------------------------------------------------------------------//
-//----------------------------------------------------------------------//
-
 #include "EventAction.hh"
 #include "EventActionMessenger.hh"
 
@@ -109,6 +91,8 @@ void EventAction::BeginOfEventAction(const G4Event*) {}
 // End of the event -> the action goes here                             //
 //----------------------------------------------------------------------//
 void EventAction::EndOfEventAction(const G4Event* evt) {
+
+
     
     //Actualizamos la barra de progreso con cada evento.
     UpdateProgressBar();   
@@ -141,8 +125,8 @@ void EventAction::EndOfEventAction(const G4Event* evt) {
     for(G4int iParticle = 0; iParticle < evt->GetPrimaryVertex(0)->GetNumberOfParticle(); iParticle++) {
 
         G4PrimaryParticle*   primary = evt->GetPrimaryVertex(0)->GetPrimary(iParticle);
-        if(primary->GetParticleDefinition()->GetParticleName() != "mu-" && primary->GetParticleDefinition()->GetParticleName() != "mu+") continue;
-        
+        if(primary->GetParticleDefinition()->GetParticleName() != "microblackhole") continue;
+        //if(primary->GetParticleDefinition()->GetParticleName() != "mu-" && primary->GetParticleDefinition()->GetParticleName() != "mu+") continue;
 	G4int hits_1 = 0;
         for (int c_layer = 0; c_layer < N_layers_det_1; c_layer++){
             if(DHC1.at(c_layer)) {
@@ -197,6 +181,16 @@ void EventAction::EndOfEventAction(const G4Event* evt) {
         // Solo imponemos que las trazas deban pasar por detector 1 y 2
         if(hits_1 == N_layers_det_1 && hits_2 == N_layers_det_2) man->AddNtupleRow(); 
     }
+
+
+    //G4TrajectoryContainer *container = evt->GetTrajectoryContainer();
+    //for(size_t i = 0; i < container->size(); i++) {
+    //    if (((*(container))[i])->GetParticleName() == "mu-" || ((*(container))[i])->GetParticleName() == "mu+") {
+    //        ((*(container))[i])->ShowTrajectory(); 
+    //    }
+//
+//    }
+//    evt->Print();
 
 }
 
